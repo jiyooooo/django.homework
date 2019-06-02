@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block body %}
+    
+ {% for blog in posts %} <!--blog에서 바꾼이유는  -->
+        <div class="container">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{blog.title}}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">{{blog.pub_date}}</h6>
+               <p class="card-text">{{blog.summary}}</p>
+
+
+      <a href="{% url 'detail' blog.id %}" class="card-link">...more</a>
+      <a href="{% url 'edit' blog.id %}" class="card-link">수정하기</a>
+      <a href="{% url 'delete' blog.id %}" class="card-link">삭제</a>
+           </div>
+             </div>
+</div>
+{%endfor%}
+
+
+<div class="container"> <!--페이지버튼 만든거-->
+
+  {% if posts.has_previous %}
+  <a href="?page=1">FIRST</a>
+  <a href="?page={{posts.previous_page_number}}">previous</a>
+  {%endif%}
+
+  <span>{{posts.number}}</span>
+  <span>of</span> <!--현재of전체-->
+  <span>{{posts.paginator.num_pages}}</span> <!--paginator class-->
+
+  {%if posts.has_next%}
+  <a href="?page={{posts.next_page_number}}">Next</a>
+  <a href="?page={{posts.paginator.num_pages}}">LAST</a>
+  {%endif%}
+</div>
+</body>
+
+{% endblock %}
